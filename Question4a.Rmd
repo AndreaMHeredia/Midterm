@@ -58,6 +58,18 @@ dev.off()
 
 ```
 
-
+Question 4b: Add code to determine the percentage of males and females by passenger class
+```{r}
+library(dplyr)
+PCLASS1 %>% 
+    group_by(Sex) %>% 
+    summarise( percent = 100 * n() / nrow(PCLASS1) )
+PCLASS2 %>% 
+    group_by(Sex) %>% 
+    summarise( percent = 100 * n() / nrow(PCLASS2) )
+PCLASS3 %>% 
+    group_by(Sex) %>% 
+    summarise( percent = 100 * n() / nrow(PCLASS3) )
+```
 
 
