@@ -1,0 +1,63 @@
+---
+title: "Midterm"
+author: "AHeredia"
+date: "2022-10-16"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+```{r}
+library(tidyverse)
+library(haven)
+library(dplyr)
+library(ggplot2)
+```
+
+Question 3:
+```{r}
+### 1. Import dataset
+
+Titanic<-read_csv("https://raw.githubusercontent.com/kijohnson/Data/main/titanic.csv")
+view(Titanic)
+summary(Titanic)
+
+### 2. Determine the median age for by passenger class
+
+PCLASS1 <- filter(Titanic,Pclass == 1)
+PCLASS2 <- filter(Titanic,Pclass == 2)
+PCLASS3 <- filter(Titanic,Pclass == 3)
+
+median(PCLASS1$Age) #Median for Class 1 is 38.5
+median(PCLASS2$Age) #Median for Class 2 is 29
+median(PCLASS3$Age) #Median for Class 3 is 24
+
+
+### 3. Create a plot that shows medians, spread of data, and outliers for the continuous variable age according to passenger class.Report the medians by passenger class and upload a PDF of picture of your plot.
+
+###created a variable "Median" and assigned each passenger the median of their group according to their passenger class
+Titanic$Median <-case_when(Titanic$Pclass == 1 ~ 38.5, 
+            Titanic$Pclass == 2 ~ 29,
+            Titanic$Pclass == 3 ~ 24)
+
+ggplot(Titanic, aes(Titanic$Pclass, Titanic$Age, group=Titanic$Median)) +
+geom_boxplot(fill="lightblue") +
+xlab("Passenger Class") +
+ylab("Age (Years)") +
+ggtitle("Box plot depicting age of passengers by class")
+
+###Printing graph in PDF
+
+pdf("Question#3_AH.pdf", width = 10, height = 6)+
+print(ggplot(Titanic, aes(Titanic$Pclass, Titanic$Age, group=Titanic$Median)) +
+geom_boxplot(fill="lightblue") +
+xlab("Passenger Class") +
+ylab("Age (Years)") +
+ggtitle("Box plot depicting age of passengers by class"))+
+dev.off()
+
+```
+
+
+
+
